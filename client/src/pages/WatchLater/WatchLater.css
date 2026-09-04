@@ -1,0 +1,136 @@
+.watch-later-page {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: 24px 14px 56px;
+  color: #f6f6f6;
+}
+
+.watch-later-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.watch-later-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.watch-later-header h1 {
+  margin: 0 0 6px;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+}
+
+.watch-later-header p {
+  margin: 0;
+  color: #94a3b8;
+}
+
+.watch-later-message {
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(248, 113, 113, 0.12);
+  color: #fecaca;
+}
+
+.watch-later-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.watch-later-card {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.watch-later-cover {
+  display: grid;
+  place-items: center;
+  min-height: 90px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.watch-later-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.watch-later-card-body {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.watch-later-card-body h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.watch-later-card-body p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.84rem;
+}
+
+.watch-later-card-body button {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 9px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+}
+
+.watch-later-state {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  padding: 52px 12px;
+  text-align: center;
+  color: #94a3b8;
+}
+
+.watch-later-state svg {
+  font-size: 1.8rem;
+}
+
+.watch-later-state h2 {
+  margin: 0;
+  color: #f5f5f5;
+}
+
+.watch-later-state p {
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .watch-later-page { padding: 32px 24px 64px; }
+  .watch-later-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 992px) {
+  .watch-later-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

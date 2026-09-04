@@ -1,0 +1,238 @@
+/* ===== CHANNEL INFO ===== */
+.channel-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin: 14px 0;
+}
+
+/* ===== LEFT ===== */
+.channel-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.channel-left[role="link"] {
+  cursor: pointer;
+}
+
+.channel-left[role="link"]:focus-visible {
+  border-radius: 8px;
+  outline: 3px solid rgba(62, 166, 255, 0.85);
+  outline-offset: 4px;
+}
+
+.channel-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.channel-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.channel-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.channel-name-row h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.verified-badge {
+  color: #3ea6ff;
+  font-size: 14px;
+}
+
+.subscriber-text {
+  color: #aaa;
+  font-size: 13px;
+}
+
+/* ===== SUBSCRIBE WRAPPER ===== */
+.subscribe-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* ===== SUBSCRIBE BUTTON ===== */
+.subscribe-btn {
+  height: 38px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.subscribe-btn:hover {
+  background: #e0e0e0;
+}
+
+.subscribe-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== SUBSCRIBED GROUP ===== */
+.subscribed-group {
+  display: flex;
+  align-items: center;
+}
+
+.subscribed-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 999px;
+  background: #272727;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.subscribed-btn:hover {
+  background: #3b3b3b;
+}
+
+.subscribed-btn svg {
+  font-size: 15px;
+}
+
+.chevron {
+  font-size: 11px;
+  transition: transform 0.2s;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+/* ===== DROPDOWN ===== */
+.notify-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #282828;
+  border-radius: 12px;
+  padding: 8px 0;
+  min-width: 220px;
+  z-index: 999;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-label {
+  color: #aaa;
+  font-size: 12px;
+  padding: 4px 16px 10px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background: #3b3b3b;
+}
+
+.dropdown-item svg {
+  font-size: 18px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.dropdown-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown-item span {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.dropdown-item small {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.dropdown-item.active {
+  color: #3ea6ff;
+}
+
+.dropdown-item.active svg {
+  color: #3ea6ff;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: #3b3b3b;
+  margin: 6px 0;
+}
+
+.dropdown-item.danger {
+  color: #ff4444;
+}
+
+.dropdown-item.danger svg {
+  color: #ff4444;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .channel-info {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .notify-dropdown {
+    right: 0;
+    left: auto;
+  }
+}

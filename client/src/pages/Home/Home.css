@@ -1,0 +1,134 @@
+/* =========================
+   HOME PAGE
+========================= */
+
+.home-page{
+    min-height:100vh;
+    background:var(--app-background);
+    padding:20px;
+}
+
+/* =========================
+   CATEGORY BAR
+========================= */
+
+.categories{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding-bottom:16px;
+    margin-bottom:25px;
+    scrollbar-width:none;
+}
+
+.categories::-webkit-scrollbar{
+    display:none;
+}
+
+.category-btn{
+    border:none;
+    outline:none;
+    background:var(--app-chip);
+    color:var(--app-text);
+    padding:9px 18px;
+    border-radius:999px;
+    cursor:pointer;
+    white-space:nowrap;
+    font-size:14px;
+    transition:.25s;
+}
+
+.category-btn:hover{
+    background:var(--app-chip-hover);
+}
+
+.category-btn.active{
+    background:var(--app-chip-active);
+    color:var(--app-chip-active-text);
+    font-weight:600;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.home-page .video-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+    gap:26px;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.home-loading{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:var(--app-text);
+    font-size:18px;
+    min-height:250px;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.home-error{
+    color:#ff4d4f;
+    text-align:center;
+    font-size:16px;
+    padding:50px 20px;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.home-empty{
+    color:#888;
+    text-align:center;
+    font-size:17px;
+    padding:60px 20px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:992px){
+
+.home-page{
+    padding:16px;
+}
+
+.home-page .video-grid{
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:20px;
+}
+
+}
+
+@media(max-width:768px){
+
+.home-page{
+    padding:12px;
+}
+
+.categories{
+    gap:8px;
+    margin-bottom:18px;
+}
+
+.category-btn{
+    padding:8px 14px;
+    font-size:13px;
+}
+
+.home-page .video-grid{
+    grid-template-columns:1fr;
+    gap:18px;
+}
+
+}

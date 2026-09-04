@@ -1,0 +1,301 @@
+.create-page {
+  --create-surface: rgba(28, 28, 34, 0.74);
+  --create-border: rgba(255, 255, 255, 0.1);
+  --create-muted: #a6a6af;
+  --create-text: #f8f8fb;
+  min-height: calc(100vh - 70px);
+  padding: 20px 16px 40px;
+  color: var(--create-text);
+  background:
+    radial-gradient(circle at 88% 0%, rgba(237, 36, 67, 0.17), transparent 34%),
+    radial-gradient(circle at 2% 34%, rgba(119, 75, 255, 0.14), transparent 36%),
+    #0b0b0e;
+}
+
+.create-screen {
+  width: min(100%, 760px);
+  margin: 0 auto;
+}
+
+.create-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.create-back-button {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #fff;
+  font-size: 17px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--create-border);
+  border-radius: 14px;
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.create-back-button:hover {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-2px);
+}
+
+.create-back-button:active {
+  transform: scale(0.92);
+}
+
+.create-back-button:focus-visible,
+.create-card:focus-visible {
+  outline: 3px solid rgba(255, 70, 92, 0.8);
+  outline-offset: 3px;
+}
+
+.create-eyebrow {
+  margin-bottom: 4px;
+  color: #f35267;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.create-header h1 {
+  font-size: clamp(1.7rem, 7vw, 2.25rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.create-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.create-intro-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #fff;
+  font-size: 17px;
+  background: linear-gradient(135deg, #ff2747, #bd1537);
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(232, 25, 56, 0.3);
+}
+
+.create-intro h2 {
+  margin: 1px 0 6px;
+  font-size: clamp(1.1rem, 4.5vw, 1.35rem);
+  letter-spacing: -0.025em;
+}
+
+.create-intro p {
+  color: var(--create-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.create-options {
+  display: grid;
+  gap: 12px;
+}
+
+.create-card {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 112px;
+  align-items: center;
+  gap: 15px;
+  padding: 17px;
+  overflow: hidden;
+  color: inherit;
+  text-align: left;
+  background: var(--create-surface);
+  border: 1px solid var(--create-border);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 220ms ease, border-color 220ms ease, background-color 220ms ease, box-shadow 220ms ease;
+  isolation: isolate;
+}
+
+.create-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  opacity: 0;
+  background: radial-gradient(circle at 10% 0%, var(--card-glow), transparent 55%);
+  transition: opacity 220ms ease;
+}
+
+.create-card:hover {
+  border-color: var(--card-border);
+  background: rgba(38, 38, 46, 0.86);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+}
+
+.create-card:hover::before {
+  opacity: 1;
+}
+
+.create-card:active {
+  transform: scale(0.975);
+}
+
+.create-card--upload {
+  --card-glow: rgba(255, 45, 72, 0.23);
+  --card-border: rgba(255, 72, 94, 0.52);
+  --card-accent: #ff4360;
+}
+
+.create-card--short {
+  --card-glow: rgba(240, 146, 45, 0.23);
+  --card-border: rgba(255, 179, 77, 0.5);
+  --card-accent: #f7a942;
+}
+
+.create-card--live {
+  --card-glow: rgba(119, 84, 255, 0.25);
+  --card-border: rgba(144, 115, 255, 0.5);
+  --card-accent: #9377ff;
+}
+
+.create-card--post {
+  --card-glow: rgba(39, 184, 157, 0.22);
+  --card-border: rgba(61, 209, 180, 0.48);
+  --card-accent: #38c6a8;
+}
+
+.create-card-icon {
+  display: grid;
+  width: 50px;
+  height: 50px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--card-accent);
+  font-size: 21px;
+  background: color-mix(in srgb, var(--card-accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--card-accent) 30%, transparent);
+  border-radius: 16px;
+}
+
+.create-card-content {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.create-card-title {
+  font-size: 1rem;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+}
+
+.create-card-description {
+  color: var(--create-muted);
+  font-size: 0.82rem;
+  line-height: 1.42;
+}
+
+.create-card-arrow {
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  color: var(--card-accent);
+  opacity: 0.75;
+  transform: rotate(90deg);
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+
+.create-card:hover .create-card-arrow {
+  opacity: 1;
+  transform: rotate(90deg) translateX(3px);
+}
+
+.create-toast {
+  position: fixed;
+  z-index: 50;
+  bottom: 22px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 184px;
+  padding: 13px 17px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: rgba(30, 30, 35, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 24px) scale(0.96);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.create-toast svg {
+  color: #5de0b2;
+}
+
+.create-toast--visible {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+@media (min-width: 640px) {
+  .create-page {
+    padding: 34px 28px 52px;
+  }
+
+  .create-header {
+    margin-bottom: 36px;
+  }
+
+  .create-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .create-card {
+    min-height: 176px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+    padding: 22px;
+  }
+
+  .create-card-arrow {
+    position: absolute;
+    right: 20px;
+    bottom: 22px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .create-page {
+    padding-top: 46px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .create-back-button,
+  .create-card,
+  .create-card::before,
+  .create-card-arrow,
+  .create-toast {
+    transition: none;
+  }
+}

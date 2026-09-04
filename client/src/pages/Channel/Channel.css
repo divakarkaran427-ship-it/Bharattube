@@ -1,0 +1,414 @@
+.channel-page {
+  min-height: 100%;
+  margin-top: -20px;
+  padding: 0 1rem 1rem;
+  background: var(--app-background, #0f0f0f);
+  color: var(--app-text, #f1f1f1);
+}
+
+.channel-page-inner {
+  width: min(100%, 1280px);
+  margin: 0 auto;
+}
+
+.channel-banner {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2.4 / 1;
+  overflow: hidden;
+  border: 1px solid var(--app-border, rgba(255, 255, 255, 0.1));
+  border-radius: 1rem;
+  background: var(--app-surface, #181818);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+}
+
+.channel-banner::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.22), transparent 55%, rgba(0, 0, 0, 0.1));
+}
+
+.channel-banner img,
+.channel-banner-fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.channel-banner-fallback {
+  background:
+    radial-gradient(circle at 78% 18%, color-mix(in srgb, var(--app-accent, #ff4d67) 55%, transparent), transparent 24%),
+    radial-gradient(circle at 18% 80%, rgba(99, 76, 229, 0.48), transparent 35%),
+    linear-gradient(118deg, #1f1a28, #26212f 48%, #14181e);
+}
+
+.channel-tab-content {
+  padding: 1.5rem 0 2.5rem;
+}
+
+.channel-featured,
+.channel-videos,
+.channel-about,
+.channel-tab-empty {
+  max-width: 100%;
+}
+
+.channel-videos + .channel-videos,
+.channel-featured + .channel-videos {
+  margin-top: 2.5rem;
+}
+
+.channel-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.channel-section-heading p,
+.channel-tab-empty > p:first-of-type {
+  margin: 0 0 0.25rem;
+  color: var(--app-muted, #aaa);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.channel-section-heading h2,
+.channel-about h2 {
+  margin: 0;
+  color: var(--app-text, #f1f1f1);
+  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.channel-section-heading > span {
+  flex: 0 0 auto;
+  color: var(--app-muted, #aaa);
+  font-size: 0.8125rem;
+}
+
+.channel-video-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem 1rem;
+}
+
+.channel-video-grid .video-card {
+  min-width: 0;
+}
+
+.channel-video-grid .video-card:focus-within {
+  border-radius: 0.9rem;
+  outline: 3px solid var(--app-accent, #ff4d67);
+  outline-offset: 4px;
+}
+
+.empty-videos,
+.channel-tab-empty,
+.channel-state {
+  display: grid;
+  min-height: 13rem;
+  place-content: center;
+  justify-items: center;
+  padding: 2rem 1.25rem;
+  border: 1px solid var(--app-border, rgba(255, 255, 255, 0.1));
+  border-radius: 1rem;
+  background: var(--app-card, rgba(31, 31, 31, 0.72));
+  text-align: center;
+}
+
+.empty-videos > span,
+.channel-tab-empty > span {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.85rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--app-chip, #272727);
+  color: var(--app-text, #f1f1f1);
+  font-size: 1.25rem;
+}
+
+.empty-videos h3,
+.channel-tab-empty h2 {
+  margin: 0;
+  color: var(--app-text, #f1f1f1);
+  font-size: 1rem;
+}
+
+.empty-videos p,
+.channel-tab-empty > p:last-child {
+  max-width: 31rem;
+  margin: 0.5rem 0 0;
+  color: var(--app-muted, #aaa);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.channel-about {
+  padding: 0.25rem 0 0;
+}
+
+.channel-about-description {
+  max-width: 48rem;
+  margin: 1.25rem 0 1.75rem;
+  color: var(--app-text, #f1f1f1);
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+.channel-about-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.channel-about-stats > div {
+  padding: 1rem;
+  border: 1px solid var(--app-border, rgba(255, 255, 255, 0.1));
+  border-radius: 0.85rem;
+  background: var(--app-card, rgba(31, 31, 31, 0.72));
+}
+
+.channel-about-stats dt {
+  color: var(--app-muted, #aaa);
+  font-size: 0.75rem;
+}
+
+.channel-about-stats dd {
+  margin: 0.35rem 0 0;
+  overflow-wrap: anywhere;
+  color: var(--app-text, #f1f1f1);
+  font-size: 0.925rem;
+  font-weight: 700;
+}
+
+.channel-state {
+  min-height: 50vh;
+  margin: 0 auto;
+  background: transparent;
+  border: 0;
+}
+
+.channel-state p {
+  margin: 0.9rem 0 0;
+  color: var(--app-muted, #aaa);
+}
+
+.channel-state-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--app-chip, #303030);
+  border-top-color: var(--app-accent, #ff4d67);
+  border-radius: 50%;
+  animation: channel-spin 700ms linear infinite;
+}
+
+.channel-state--error {
+  max-width: 34rem;
+  min-height: 16rem;
+  margin-top: 10vh;
+  border: 1px solid rgba(255, 93, 115, 0.38);
+  background: var(--app-card, rgba(31, 31, 31, 0.72));
+}
+
+.channel-state--error > svg {
+  color: #ff5d73;
+  font-size: 2rem;
+}
+
+.channel-state--error h1 {
+  margin: 0.8rem 0 0;
+  font-size: 1.25rem;
+}
+
+.channel-state--error button {
+  min-height: 2.5rem;
+  margin-top: 1.25rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--app-text, #f1f1f1);
+  color: var(--app-background, #0f0f0f);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.channel-state--error button:focus-visible {
+  outline: 3px solid var(--app-accent, #ff4d67);
+  outline-offset: 3px;
+}
+
+@keyframes channel-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (min-width: 576px) {
+  .channel-page {
+    padding: 0 1.5rem 1.25rem;
+  }
+
+  .channel-about-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .channel-banner {
+    aspect-ratio: 3.5 / 1;
+  }
+}
+
+@media (min-width: 768px) {
+  .channel-page {
+    padding: 0 2rem 1.5rem;
+  }
+
+  .channel-banner {
+    border-radius: 1.25rem;
+    aspect-ratio: 4.5 / 1;
+  }
+
+  .channel-tab-content {
+    padding-top: 2rem;
+  }
+
+  .channel-video-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1.25rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .channel-page {
+    padding: 0 2.5rem 1.75rem;
+  }
+
+  .channel-video-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.25rem 1.5rem;
+  }
+
+  .channel-banner {
+    aspect-ratio: 6 / 1;
+  }
+
+  .channel-about-stats {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .channel-page {
+    padding: 0 3rem 2rem;
+  }
+
+  .channel-video-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1440px) {
+  .channel-page {
+    padding-right: 4rem;
+    padding-left: 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .channel-state-spinner {
+    animation: none;
+  }
+}
+
+/* =========================
+   CHANNEL SORT CONTROLS
+========================= */
+
+.channel-sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
+  overflow-x: auto;
+  padding: 0.15rem 0 0.35rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.channel-sort-controls::-webkit-scrollbar {
+  display: none;
+}
+
+.channel-sort-button {
+  flex: 0 0 auto;
+  min-height: 2.25rem;
+  padding: 0 1rem;
+  border: 1px solid var(--app-border, rgba(255, 255, 255, 0.1));
+  border-radius: 999px;
+  background: var(--app-card, #1f1f1f);
+  color: var(--app-muted, #aaa);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.channel-sort-button:hover {
+  background: var(--app-chip, #292929);
+  color: var(--app-text, #f1f1f1);
+  transform: translateY(-1px);
+}
+
+.channel-sort-button--active {
+  background: var(--app-text, #f1f1f1);
+  border-color: var(--app-text, #f1f1f1);
+  color: var(--app-background, #0f0f0f);
+}
+
+.channel-sort-button--active:hover {
+  background: var(--app-text, #f1f1f1);
+  color: var(--app-background, #0f0f0f);
+}
+
+.channel-sort-button:focus-visible {
+  outline: 3px solid var(--app-accent, #ff4d67);
+  outline-offset: 3px;
+}
+
+@media (min-width: 576px) {
+  .channel-sort-controls {
+    margin-bottom: 1.5rem;
+  }
+
+  .channel-sort-button {
+    min-height: 2.4rem;
+    padding: 0 1.1rem;
+    font-size: 0.825rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .channel-sort-controls {
+    gap: 0.6rem;
+  }
+
+  .channel-sort-button {
+    min-height: 2.5rem;
+  }
+}

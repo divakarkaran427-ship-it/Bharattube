@@ -1,0 +1,31 @@
+.copyright-claims-page { max-width: 1100px; margin: 0 auto; padding: 40px 24px 96px; }
+.copyright-claims-header { border-bottom: 1px solid var(--app-border); padding-bottom: 24px; }
+.copyright-claims-header p { color: var(--app-accent); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.copyright-claims-header h1 { margin: 10px 0 8px; font-size: 32px; }
+.copyright-claims-header span, .copyright-claims-state p, .copyright-dispute-unavailable { color: var(--app-muted); }
+.copyright-claims-message { margin: 20px 0; color: #8be0ad; }
+.copyright-claims-message--error, .copyright-dispute-error { color: #ff8f83; }
+.copyright-claims-state { padding: 64px 0; text-align: center; }
+.copyright-claims-state h2, .copyright-claims-state h1 { margin-bottom: 8px; }
+.copyright-claim-list { display: grid; gap: 18px; margin-top: 24px; }
+.copyright-claim-card { padding: 22px; border: 1px solid var(--app-border); background: var(--app-surface); }
+.copyright-claim-card-header { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; }
+.copyright-claim-eyebrow { color: var(--app-muted); font-size: 12px; overflow-wrap: anywhere; }
+.copyright-claim-card h2 { margin: 8px 0 0; font-size: 18px; overflow-wrap: anywhere; }
+.copyright-claim-status { padding: 6px 9px; color: #fff; background: #536170; font-size: 12px; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+.copyright-claim-status--valid { background: #a56b22; }
+.copyright-claim-status--pending, .copyright-claim-status--under_review { background: var(--app-accent); }
+.copyright-claim-details { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 22px 0; }
+.copyright-claim-details dt { color: var(--app-muted); font-size: 12px; margin-bottom: 5px; }
+.copyright-claim-details dd { margin: 0; overflow-wrap: anywhere; }
+.copyright-claim-copy { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding-top: 18px; border-top: 1px solid var(--app-border); }
+.copyright-claim-copy strong { font-size: 13px; }
+.copyright-claim-copy p { margin: 6px 0 0; color: var(--app-muted); white-space: pre-wrap; overflow-wrap: anywhere; }
+.copyright-dispute-form { display: grid; gap: 12px; max-width: 680px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--app-border); }
+.copyright-dispute-form h3 { margin: 0 0 2px; font-size: 16px; }
+.copyright-dispute-form label { display: grid; gap: 6px; color: var(--app-muted); font-size: 13px; }
+.copyright-dispute-form textarea { width: 100%; resize: vertical; padding: 10px; border: 1px solid var(--app-border); background: var(--app-background); color: var(--app-text); font: inherit; }
+.copyright-dispute-form button { width: fit-content; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 0; color: #fff; background: var(--app-accent); font-weight: 700; }
+.copyright-dispute-success { display: flex; align-items: center; gap: 9px; margin-top: 24px; color: #8be0ad; }
+.copyright-dispute-pending { margin-top: 24px; color: var(--app-muted); }
+@media (max-width: 720px) { .copyright-claims-page { padding: 28px 16px 80px; } .copyright-claim-card-header { flex-direction: column; } .copyright-claim-details, .copyright-claim-copy { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

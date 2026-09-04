@@ -1,0 +1,289 @@
+.channel-header {
+  position: relative;
+  z-index: 1;
+  margin-top: 0;
+  padding: 1.25rem 0 1.5rem;
+}
+
+.channel-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.channel-avatar-wrapper {
+  width: 5.75rem;
+  height: 5.75rem;
+  flex: 0 0 auto;
+  padding: 3px;
+  border-radius: 50%;
+  background: var(--app-surface, #181818);
+  transform: none;
+  margin-bottom: 0;
+}
+
+.channel-header .channel-avatar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  object-fit: cover;
+  background: #272727;
+}
+
+.channel-meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.channel-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.channel-info-block {
+  min-width: 0;
+}
+
+.channel-title,
+.channel-stats,
+.channel-actions,
+.share-btn {
+  display: flex;
+  align-items: center;
+}
+
+.channel-title {
+  gap: 0.45rem;
+}
+
+.channel-title h1 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--app-text, #f1f1f1);
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  font-weight: 750;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+
+.channel-header .verified-icon {
+  flex: 0 0 auto;
+  color: #3ea6ff;
+  font-size: 1rem;
+}
+
+.channel-handle,
+.channel-stats,
+.channel-description,
+.channel-join-date {
+  margin: 0.4rem 0 0;
+  color: var(--app-muted, #aaa);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.channel-stats {
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.channel-description-wrapper {
+  display: flex;
+  align-items: baseline;
+  max-width: 56rem;
+  margin-top: 0.4rem;
+}
+
+.channel-description {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--app-text, #f1f1f1);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-box-orient: vertical;
+}
+
+.channel-description--expanded {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.channel-description-toggle {
+  flex: 0 0 auto;
+  margin-left: 0.35rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--app-text, #f1f1f1);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 750;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.channel-description-toggle:hover {
+  text-decoration: underline;
+}
+
+.channel-description-toggle:focus-visible {
+  border-radius: 0.2rem;
+  outline: 3px solid var(--app-accent, #ff4d67);
+  outline-offset: 3px;
+}
+
+.channel-join-date {
+  font-size: 0.8125rem;
+}
+
+.channel-actions {
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.channel-actions > .channel-info {
+  display: block;
+  width: auto;
+  margin: 0;
+}
+
+.channel-actions > .channel-info .channel-left {
+  display: none;
+}
+
+.channel-actions > .channel-info .subscribe-wrapper {
+  position: relative;
+}
+
+.channel-actions .subscribe-btn,
+.channel-actions .subscribed-btn,
+.channel-actions .share-btn {
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.channel-actions .subscribe-btn {
+  min-width: 6.75rem;
+  background: var(--app-text, #f1f1f1);
+  color: var(--app-background, #0f0f0f);
+}
+
+.channel-actions .subscribe-btn:hover:not(:disabled) {
+  background: #e4e4e4;
+  transform: translateY(-1px);
+}
+
+.channel-actions .subscribed-btn,
+.channel-actions .share-btn {
+  justify-content: center;
+  gap: 0.45rem;
+  background: var(--app-chip, #272727);
+  color: var(--app-text, #f1f1f1);
+}
+
+.channel-actions .subscribed-btn:hover:not(:disabled),
+.channel-actions .share-btn:hover {
+  background: var(--app-chip-hover, #3f3f3f);
+  transform: translateY(-1px);
+}
+
+.channel-actions .subscribe-btn:disabled,
+.channel-actions .subscribed-btn:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.channel-actions .subscriber-text {
+  display: none;
+}
+
+.channel-header .notify-dropdown {
+  z-index: 20;
+}
+
+.channel-share-message {
+  display: block;
+  margin-top: 0.6rem;
+  color: #7dd3a8;
+  font-size: 0.8125rem;
+}
+
+.channel-actions button:focus-visible {
+  outline: 3px solid var(--app-accent, #ff4d67);
+  outline-offset: 3px;
+}
+
+@media (min-width: 640px) {
+  .channel-header {
+    padding-top: 1.5rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .channel-avatar-wrapper {
+    width: 8.5rem;
+    height: 8.5rem;
+  }
+
+  .channel-title h1 {
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+  }
+}
+
+@media (min-width: 992px) {
+  .channel-avatar-wrapper {
+    width: 10rem;
+    height: 10rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .channel-header-left,
+  .channel-title-row {
+    align-items: flex-start;
+  }
+
+  .channel-header-left {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .channel-title-row {
+    flex-direction: column;
+  }
+
+  .channel-actions {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .channel-actions > .channel-info,
+  .channel-actions > .channel-info .subscribe-wrapper,
+  .channel-actions .subscribe-btn,
+  .channel-actions .subscribed-btn,
+  .channel-actions .share-btn {
+    flex: 1 1 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .channel-actions .subscribe-btn,
+  .channel-actions .subscribed-btn,
+  .channel-actions .share-btn {
+    transition: none;
+  }
+}

@@ -1,0 +1,99 @@
+/* ===== DESCRIPTION BOX ===== */
+.desc-box {
+  background: #272727;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-top: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.desc-box:hover {
+  background: #2f2f2f;
+}
+
+.desc-box.expanded {
+  cursor: default;
+}
+
+.desc-box.expanded:hover {
+  background: #272727;
+}
+
+/* ===== STATS ROW ===== */
+.desc-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.desc-category {
+  color: #3ea6ff;
+  font-weight: 600;
+}
+
+/* ===== TAGS ===== */
+.desc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.desc-tag {
+  color: #3ea6ff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.desc-tag:hover {
+  text-decoration: underline;
+}
+
+/* ===== TEXT ===== */
+.desc-text {
+  font-size: 14px;
+  color: #e0e0e0;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ===== TOGGLE ===== */
+.desc-toggle {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 8px 0 0 0;
+  display: block;
+  transition: color 0.2s;
+}
+
+.desc-toggle:hover {
+  color: #aaa;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .desc-box {
+    padding: 12px 14px;
+  }
+
+  .desc-stats {
+    font-size: 12px;
+  }
+
+  .desc-text {
+    font-size: 13px;
+  }
+}

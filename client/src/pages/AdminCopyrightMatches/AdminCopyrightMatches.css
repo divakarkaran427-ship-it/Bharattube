@@ -1,0 +1,22 @@
+.admin-matches-page { max-width: 1100px; margin: 0 auto; padding: 40px 24px 96px; }
+.admin-matches-header { border-bottom: 1px solid var(--app-border); padding-bottom: 24px; }
+.admin-matches-header p { color: var(--app-accent); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.admin-matches-header h1 { margin: 10px 0 8px; font-size: 32px; }
+.admin-matches-header span, .admin-matches-state p { color: var(--app-muted); }
+.admin-matches-message { margin: 20px 0; color: #8be0ad; }
+.admin-matches-message--error { color: #ff8f83; }
+.admin-matches-state { padding: 64px 0; text-align: center; }
+.admin-matches-state h2, .admin-matches-state h1 { margin-bottom: 8px; }
+.admin-match-list { display: grid; gap: 16px; margin-top: 24px; }
+.admin-match-card { display: flex; justify-content: space-between; gap: 24px; padding: 22px; border: 1px solid var(--app-border); background: var(--app-surface); }
+.admin-match-details { min-width: 0; }
+.admin-match-status { color: var(--app-accent); font-size: 12px; font-weight: 700; text-transform: uppercase; }
+.admin-match-card h2 { margin: 8px 0 18px; font-size: 17px; overflow-wrap: anywhere; }
+.admin-match-card dl { display: grid; grid-template-columns: repeat(4, minmax(100px, 1fr)); gap: 16px; margin: 0; }
+.admin-match-card dt { color: var(--app-muted); font-size: 12px; margin-bottom: 5px; }
+.admin-match-card dd { margin: 0; overflow-wrap: anywhere; }
+.admin-match-actions { display: flex; flex-direction: column; justify-content: center; gap: 8px; min-width: 190px; }
+.admin-match-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; padding: 10px 12px; color: #fff; background: var(--app-accent); font-weight: 700; }
+.admin-match-actions button:disabled { cursor: wait; opacity: .55; }
+.admin-match-actions .admin-match-reject { background: transparent; border: 1px solid var(--app-border); color: var(--app-text); }
+@media (max-width: 720px) { .admin-matches-page { padding: 28px 16px 80px; } .admin-match-card { flex-direction: column; } .admin-match-card dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } .admin-match-actions { min-width: 0; } }

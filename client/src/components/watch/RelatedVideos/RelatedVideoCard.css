@@ -1,0 +1,56 @@
+.related-video-card{
+    display:flex;
+    gap:12px;
+    margin-bottom:16px;
+    cursor:pointer;
+}
+
+.related-thumbnail{
+    width:170px;
+    height:95px;
+    border-radius:10px;
+    object-fit:cover;
+    flex-shrink:0;
+    transition:transform 0.22s ease;
+    transform-origin:center center;
+}
+
+.related-video-card:hover .related-thumbnail{
+    transform:scale(1.02);
+}
+
+.related-info{
+    flex:1;
+}
+
+.related-info h4{
+    color:#fff;
+    font-size:15px;
+    margin-bottom:6px;
+    line-height:1.4;
+}
+
+.related-info p{
+    color:#aaa;
+    font-size:13px;
+    margin-bottom:4px;
+}
+
+.related-info span{
+    color:#888;
+    font-size:12px;
+}
+
+@media(max-width:768px){
+
+.related-video-card{
+    flex-direction:column;
+}
+
+.related-thumbnail{
+    width:100%;
+    height:auto;
+    aspect-ratio:16/9;
+}
+
+}

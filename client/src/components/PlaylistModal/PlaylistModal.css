@@ -1,0 +1,176 @@
+.playlist-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.58);
+}
+
+.playlist-modal {
+  width: min(100%, 520px);
+  max-height: min(90vh, 720px);
+  overflow: auto;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(35, 35, 40, 0.98), rgba(20, 20, 24, 0.98));
+  color: #f7f7fa;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.48);
+}
+
+.playlist-modal-header,
+.playlist-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.playlist-modal-kicker {
+  margin: 0 0 4px;
+  color: #9ca3af;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.playlist-modal-header h2 {
+  margin: 0;
+  font-size: 1.18rem;
+}
+
+.playlist-modal-close {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.playlist-modal-error {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(248, 113, 113, 0.15);
+  color: #fecaca;
+  font-size: 0.85rem;
+}
+
+.playlist-modal-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.playlist-modal-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.playlist-modal-item input {
+  accent-color: #f43f5e;
+}
+
+.playlist-modal-item-main {
+  display: grid;
+  gap: 2px;
+}
+
+.playlist-modal-item strong {
+  font-size: 0.88rem;
+}
+
+.playlist-modal-item small {
+  color: #b1b4be;
+  font-size: 0.74rem;
+}
+
+.playlist-modal-item-icon {
+  color: #9ca3af;
+}
+
+.playlist-modal-empty {
+  margin: 0;
+  padding: 14px 0;
+  color: #a1a1aa;
+  font-size: 0.86rem;
+}
+
+.playlist-modal-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.playlist-modal-form label {
+  display: grid;
+  gap: 6px;
+  color: #e4e4e7;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.playlist-modal-form input,
+.playlist-modal-form textarea,
+.playlist-modal-form select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+}
+
+.playlist-modal-form textarea {
+  resize: vertical;
+}
+
+.playlist-modal-create,
+.playlist-modal-save,
+.playlist-modal-cancel {
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.playlist-modal-create,
+.playlist-modal-save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  color: #fff;
+  background: var(--app-accent);
+  font-weight: 700;
+}
+
+.playlist-modal-cancel {
+  padding: 10px 14px;
+  color: #e4e4e7;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.playlist-modal-actions {
+  margin-top: 16px;
+}
+
+@media (max-width: 576px) {
+  .playlist-modal {
+    padding: 14px;
+    border-radius: 16px;
+  }
+}

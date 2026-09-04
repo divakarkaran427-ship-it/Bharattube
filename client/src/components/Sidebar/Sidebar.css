@@ -1,0 +1,94 @@
+/* ===== SIDEBAR ===== */
+.sidebar {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 240px;
+  height: calc(100vh - 70px);
+  background: var(--app-sidebar);
+  border-right: 1px solid var(--app-border);
+  z-index: 999;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: transform 0.25s ease, width 0.25s ease;
+  padding: 8px 0;
+  scrollbar-width: none;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== COLLAPSED — sirf icons ===== */
+.sidebar.collapsed {
+  width: 72px;
+}
+
+/* ===== MENU ITEM ===== */
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 16px;
+  color: var(--app-text);
+  cursor: pointer;
+  border-radius: 10px;
+  margin: 2px 8px;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.menu:hover {
+  background: var(--app-chip-hover);
+}
+
+.menu.active {
+  background: var(--app-accent);
+}
+
+.menu-icon {
+  font-size: 20px;
+  min-width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.menu-title {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== OVERLAY ===== */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: 70px;
+  background: rgba(0,0,0,0.5);
+  z-index: 998;
+}
+
+.sidebar-overlay.show {
+  display: block;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 240px;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar.collapsed {
+    transform: translateX(-100%);
+    width: 240px;
+  }
+}

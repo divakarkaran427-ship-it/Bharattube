@@ -1,0 +1,303 @@
+/* ===== CONTAINER ===== */
+.vp-container {
+  position: relative;
+  width: 100%;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  user-select: none;
+}
+
+.vp-container.theater {
+  aspect-ratio: 21/9;
+  border-radius: 0;
+}
+
+.vp-container.fullscreen {
+  border-radius: 0;
+  aspect-ratio: unset;
+  height: 100vh;
+}
+
+/* ===== VIDEO ===== */
+.vp-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+/* ===== CENTER PLAY ===== */
+.vp-center-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 68px;
+  background: rgba(0,0,0,0.65);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 26px;
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.2s;
+}
+
+.vp-center-play:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+/* ===== SLEEP BADGE ===== */
+.vp-sleep-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 10;
+}
+
+/* ===== CONTROLS ===== */
+.vp-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 50px 14px 12px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.vp-controls.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ===== PROGRESS ===== */
+.vp-progress {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 4px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: height 0.15s;
+}
+
+.vp-progress:hover {
+  height: 6px;
+}
+
+.vp-buffered {
+  position: absolute;
+  height: 100%;
+  background: rgba(255,255,255,0.3);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.vp-played {
+  position: absolute;
+  height: 100%;
+  background: #ff3d00;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.vp-thumb {
+  position: absolute;
+  right: -6px;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+
+.vp-progress:hover .vp-thumb {
+  opacity: 1;
+}
+
+/* ===== BOTTOM ROW ===== */
+.vp-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.vp-left, .vp-right {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ===== BUTTON ===== */
+.vp-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.vp-btn:hover { background: rgba(255,255,255,0.15); }
+.vp-btn.active { color: #ff3d00; }
+.play-btn { font-size: 18px; }
+
+.spin {
+  animation: spinAnim 0.4s ease;
+}
+
+@keyframes spinAnim {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(90deg); }
+}
+
+/* ===== TIME ===== */
+.vp-time {
+  color: #fff;
+  font-size: 13px;
+  white-space: nowrap;
+  padding: 0 8px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== VOLUME ===== */
+.vp-volume-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vp-vol-slider {
+  width: 72px;
+  height: 4px;
+  accent-color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* ===== SETTINGS MENU ===== */
+.vp-settings-wrap {
+  position: relative;
+}
+
+.vp-menu {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: 0;
+  background: rgba(22,22,22,0.97);
+  border-radius: 12px;
+  padding: 8px 0;
+  min-width: 240px;
+  z-index: 999;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.6);
+  animation: menuUp 0.15s ease;
+  backdrop-filter: blur(10px);
+}
+
+@keyframes menuUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.vp-menu-back {
+  color: #aaa;
+  font-size: 13px;
+  padding: 8px 16px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #333;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vp-menu-back:hover { color: #fff; }
+
+.vp-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.vp-menu-item:hover { background: rgba(255,255,255,0.08); }
+
+.vp-menu-item.selected { color: #ff3d00; font-weight: 600; }
+
+.vp-menu-val {
+  color: #aaa;
+  font-size: 13px;
+}
+
+/* ===== TOGGLE SWITCH ===== */
+.vp-toggle {
+  width: 36px;
+  height: 20px;
+  background: #444;
+  border-radius: 999px;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.vp-toggle::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.vp-toggle.on {
+  background: #ff3d00;
+}
+
+.vp-toggle.on::after {
+  transform: translateX(16px);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .vp-vol-slider { display: none; }
+  .vp-time { font-size: 11px; padding: 0 4px; }
+  .vp-btn { width: 32px; height: 32px; font-size: 14px; }
+  .vp-menu { min-width: 200px; right: -40px; }
+}

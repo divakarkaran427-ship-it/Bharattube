@@ -1,0 +1,85 @@
+.channel-card{
+    margin-top:0;
+    background:#181818;
+    border-radius:16px;
+    padding:18px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.channel-left{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.channel-left img{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.channel-details{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.channel-title{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.channel-title h3{
+    color:white;
+    font-size:18px;
+}
+
+.verified-icon{
+    color:#3ea6ff;
+}
+
+.channel-handle{
+    color:#aaaaaa;
+    font-size:14px;
+}
+
+.subscriber-count{
+    color:#aaaaaa;
+    font-size:14px;
+}
+
+.subscribe-btn{
+    border:none;
+    border-radius:999px;
+    background:#ff5a1f;
+    color:white;
+
+    padding:12px 24px;
+
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.subscribe-btn:hover{
+    opacity:.9;
+}
+
+@media(max-width:768px){
+
+.channel-card{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.subscribe-btn{
+    width:100%;
+}
+
+}
