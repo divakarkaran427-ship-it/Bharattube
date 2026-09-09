@@ -2,6 +2,8 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const crypto = require("crypto");
+const http = require("http");
+const https = require("https");
 const { spawnSync } = require("child_process");
 const CopyrightReference = require("../models/copyrightReference.model");
 
@@ -26,6 +28,64 @@ const cleanupDirectory = (dirPath) => {
   } catch (error) {
     // fail silently for temp cleanup
   }
+};
+
+const downloadMediaSource = (mediaUrl, destinationPath, redirectCount = 0) => {
+  return new Promise((resolve, reject) => {
+    let parsedUrl;
+
+    try {
+      parsedUrl = new URL(mediaUrl);
+    } catch (error) {
+      reject(new Error("A valid media URL is required."));
+      return;
+    }
+
+    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
+      reject(new Error("Only HTTP and HTTPS media URLs are supported."));
+      return;
+    }
+
+    const request = (parsedUrl.protocol === "https:" ? https : http).get(
+      parsedUrl,
+      (response) => {
+        if ([301, 302, 303, 307, 308].includes(response.statusCode)) {
+          response.resume();
+
+          if (redirectCount >= 5 || !response.headers.location) {
+            reject(new Error("Too many media URL redirects."));
+            return;
+          }
+
+          downloadMediaSource(
+            new URL(response.headers.location, parsedUrl).toString(),
+            destinationPath,
+            redirectCount + 1
+          ).then(resolve).catch(reject);
+          return;
+        }
+
+        if (response.statusCode !== 200) {
+          response.resume();
+          reject(new Error(`Unable to download media source (${response.statusCode}).`));
+          return;
+        }
+
+        const output = fs.createWriteStream(destinationPath);
+        response.pipe(output);
+
+        output.on("finish", () => {
+          output.close(resolve);
+        });
+        output.on("error", (error) => {
+          output.destroy();
+          reject(error);
+        });
+      }
+    );
+
+    request.on("error", reject);
+  });
 };
 
 const buildFeatureSignature = (audioBuffer) => {
@@ -187,6 +247,30 @@ const generateReferenceAudioFingerprint = (referenceId, mediaFilePath) => {
   };
 };
 
+const generateReferenceAudioFingerprintFromUrl = async (referenceId, mediaUrl) => {
+  if (!mediaUrl || typeof mediaUrl !== "string") {
+    return {
+      ok: false,
+      error: "A valid media URL is required.",
+    };
+  }
+
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "bharattube-reference-fp-"));
+  const mediaFilePath = path.join(tempDir, "source-video");
+
+  try {
+    await downloadMediaSource(mediaUrl, mediaFilePath);
+    return generateReferenceAudioFingerprint(referenceId, mediaFilePath);
+  } catch (error) {
+    return {
+      ok: false,
+      error: error && error.message ? error.message : "Reference fingerprint generation failed.",
+    };
+  } finally {
+    cleanupDirectory(tempDir);
+  }
+};
+
 const compareAudioFingerprints = (videoFingerprint, referenceFingerprint) => {
   if (!videoFingerprint || !referenceFingerprint) {
     return {
@@ -293,6 +377,7 @@ module.exports = {
   verifyFfmpegAvailability,
   generateAudioFingerprint,
   generateReferenceAudioFingerprint,
+  generateReferenceAudioFingerprintFromUrl,
   compareAudioFingerprints,
   compareReferenceAudioMatch,
 };

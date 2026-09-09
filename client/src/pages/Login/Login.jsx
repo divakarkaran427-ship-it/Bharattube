@@ -44,7 +44,8 @@ function Login() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.assign("http://localhost:5000/api/v1/auth/google");
+    const apiBaseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+    window.location.assign(`${apiBaseUrl}/auth/google`);
   };
 
   return (

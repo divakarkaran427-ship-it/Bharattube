@@ -1,7 +1,11 @@
 const CopyrightReference = require("../models/copyrightReference.model");
+const MediaFingerprint = require("../models/mediaFingerprint.model");
 const CopyrightAuditLog = require("../models/copyrightAuditLog.model");
 const Video = require("../models/video.model");
 const Channel = require("../models/channel.model");
+const {
+  generateReferenceAudioFingerprintFromUrl,
+} = require("../services/fingerprintService");
 
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/ApiError");
@@ -71,6 +75,58 @@ const createCopyrightReference = asyncHandler(async (req, res) => {
     createdBy: req.user._id,
   });
 
+  let fingerprintStatus = {
+    status: "skipped",
+    reason: "Reference fingerprint was not generated.",
+  };
+
+  try {
+    const existingFingerprint = await MediaFingerprint.findOne({
+      reference: reference._id,
+      mediaType: "audio",
+    });
+
+    if (existingFingerprint) {
+      fingerprintStatus = {
+        status: "already_present",
+        fingerprintId: existingFingerprint._id,
+      };
+    } else {
+      const fingerprintResult = await generateReferenceAudioFingerprintFromUrl(
+        reference._id.toString(),
+        existingVideo.videoUrl
+      );
+
+      if (fingerprintResult.ok) {
+        const fingerprint = await MediaFingerprint.create({
+          video: reference.video,
+          reference: reference._id,
+          mediaType: fingerprintResult.mediaType,
+          fingerprintVersion: fingerprintResult.fingerprintVersion,
+          hashSummary: fingerprintResult.hashSummary,
+          featureSignature: fingerprintResult.featureSignature,
+        });
+
+        fingerprintStatus = {
+          status: "persisted",
+          fingerprintId: fingerprint._id,
+        };
+      } else {
+        fingerprintStatus.reason = fingerprintResult.error;
+        console.warn(
+          "Copyright reference fingerprint generation skipped:",
+          fingerprintResult.error
+        );
+      }
+    }
+  } catch (error) {
+    fingerprintStatus.reason = error?.message || "Reference fingerprint persistence failed.";
+    console.warn(
+      "Copyright reference fingerprint persistence failed:",
+      fingerprintStatus.reason
+    );
+  }
+
   await CopyrightAuditLog.create({
     entityType: "reference",
     entityId: reference._id,
@@ -87,8 +143,19 @@ const createCopyrightReference = asyncHandler(async (req, res) => {
     },
   });
 
+  const fingerprintMessage =
+    fingerprintStatus.status === "persisted"
+      ? "; audio fingerprint persisted"
+      : fingerprintStatus.status === "already_present"
+        ? "; audio fingerprint already present"
+          : "; audio fingerprint skipped";
+
   return res.status(201).json(
-    new ApiResponse(201, "Copyright reference created successfully", reference)
+    new ApiResponse(
+      201,
+      `Copyright reference created successfully${fingerprintMessage}`,
+      reference
+    )
   );
 });
 
