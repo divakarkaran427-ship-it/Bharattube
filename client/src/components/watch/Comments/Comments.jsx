@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaUserCircle, FaThumbsUp, FaReply } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaReply, FaThumbsUp, FaUserCircle } from "react-icons/fa";
 import commentService from "../../../services/comment.service";
 import { useAuth } from "../../../context/AuthContext";
 import formatTimeAgo from "../../../utils/formatTimeAgo";
@@ -12,6 +12,7 @@ function CommentItem({ comment, videoId, onReply, onLikeToggle, user, depth = 0 
   const [replyText, setReplyText] = useState("");
   const [showReplyBox, setShowReplyBox] = useState(false);
   const [replying, setReplying] = useState(false);
+  const [showReplies, setShowReplies] = useState(false);
   const [liked, setLiked] = useState(
     Array.isArray(comment.likes)
       ? comment.likes.some((id) => id?.toString?.() === user?._id?.toString())
@@ -27,12 +28,20 @@ function CommentItem({ comment, videoId, onReply, onLikeToggle, user, depth = 0 
       await onReply(videoId, comment._id, replyText.trim());
       setReplyText("");
       setShowReplyBox(false);
+      setShowReplies(true);
     } catch (error) {
       console.error(error);
     } finally {
       setReplying(false);
     }
   };
+
+  const replyCount = (replies) => (replies || []).reduce(
+    (count, reply) => count + 1 + replyCount(reply.replies),
+    0
+  );
+  const totalReplies = replyCount(comment.replies);
+  const canToggleReplies = depth === 0 && totalReplies > 0;
 
   const handleLike = async () => {
     if (!user) return alert("Please login to like comments!");
@@ -98,7 +107,19 @@ function CommentItem({ comment, videoId, onReply, onLikeToggle, user, depth = 0 
           </div>
         )}
 
-        {Array.isArray(comment.replies) && comment.replies.length > 0 && (
+        {canToggleReplies && (
+          <button
+            type="button"
+            className="replies-toggle"
+            onClick={() => setShowReplies((visible) => !visible)}
+            aria-expanded={showReplies}
+          >
+            <span>{showReplies ? "Hide" : "View"} {totalReplies} {totalReplies === 1 ? "reply" : "replies"}</span>
+            {showReplies ? <FaChevronUp aria-hidden="true" /> : <FaChevronDown aria-hidden="true" />}
+          </button>
+        )}
+
+        {Array.isArray(comment.replies) && comment.replies.length > 0 && (depth > 0 || showReplies) && (
           <div className="comment-replies">
             {comment.replies.map((reply) => (
               <CommentItem

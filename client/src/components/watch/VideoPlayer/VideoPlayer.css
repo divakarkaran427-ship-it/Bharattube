@@ -3,7 +3,7 @@
   position: relative;
   width: 100%;
   background: #000;
-  border-radius: 16px;
+  border-radius: 8px; 
   overflow: hidden;
   aspect-ratio: 16/9;
   user-select: none;
@@ -75,7 +75,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 50px 14px 12px;
+  /* padding: 50px 14px 12px; */
   background: linear-gradient(transparent, rgba(0,0,0,0.9));
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -216,7 +216,7 @@
   right: 0;
   background: rgba(22,22,22,0.97);
   border-radius: 12px;
-  padding: 8px 0;
+  /* padding: 8px 0; */
   min-width: 240px;
   z-index: 999;
   box-shadow: 0 6px 24px rgba(0,0,0,0.6);
@@ -299,5 +299,5 @@
   .vp-vol-slider { display: none; }
   .vp-time { font-size: 11px; padding: 0 4px; }
   .vp-btn { width: 32px; height: 32px; font-size: 14px; }
-  .vp-menu { min-width: 200px; right: -40px; }
+  .vp-menu { min-width: 200px; right: -75px; }
 }

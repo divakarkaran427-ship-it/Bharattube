@@ -6,10 +6,18 @@ const authMiddleware = require("../middlewares/auth.middleware");
 const adminMiddleware = require("../middlewares/admin.middleware");
 
 const {
+    getAdminDashboard,
     getPendingMonetizations,
     approveMonetization,
     rejectMonetization,
 } = require("../controllers/admin.controller");
+
+router.get(
+    "/dashboard",
+    authMiddleware,
+    adminMiddleware,
+    getAdminDashboard
+);
 
 // Get Pending Applications
 router.get(

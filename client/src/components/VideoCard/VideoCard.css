@@ -71,6 +71,26 @@
   flex-shrink: 0;
 }
 
+.channel-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.channel-link:disabled {
+  cursor: default;
+}
+
+.channel-link--logo {
+  display: block;
+  height: fit-content;
+  border-radius: 50%;
+}
+
 .video-content {
   flex: 1;
   min-width: 0;
@@ -191,4 +211,8 @@
   .video-card--short .video-meta {
     font-size: 12px;
   }
+}
+
+.channel-name .channel-link:hover:not(:disabled) {
+  color: var(--app-text, #fff);
 }

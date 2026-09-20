@@ -246,3 +246,23 @@
     font-size: 30px;
   }
 }
+
+.replies-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 5px 8px;
+  color: #3ea6ff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.replies-toggle:hover { background: rgba(62, 166, 255, 0.13); }
+.replies-toggle svg { font-size: 12px; }
+.replies-toggle:focus-visible { outline: 2px solid #3ea6ff; outline-offset: 2px; }

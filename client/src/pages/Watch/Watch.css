@@ -3,7 +3,7 @@
   min-height: 100vh;
   background: #0f0f0f;
   color: #fff;
-  padding: 24px;
+  /* padding: 24px; */
 }
 
 .watch-container {
@@ -59,7 +59,7 @@
 }
 
 @media(max-width:768px){
-  .watch-page{padding:12px}
+  /* .watch-page{padding:12px} */
   .video-title{font-size:16px}
   .video-meta{flex-wrap:wrap}
 }

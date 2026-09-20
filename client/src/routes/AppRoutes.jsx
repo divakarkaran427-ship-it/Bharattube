@@ -24,6 +24,10 @@ import CreateChannel from "../pages/CreateChannel/CreateChannel"; // ⭐ Added
 import EditChannel from "../pages/EditChannel/EditChannel";
 import AdminCopyrightMatches from "../pages/AdminCopyrightMatches/AdminCopyrightMatches";
 import CopyrightClaims from "../pages/CopyrightClaims/CopyrightClaims";
+import Subscriptions from "../pages/Subscriptions/Subscriptions";
+import You from "../pages/You/You";
+import Search from "../pages/Search/Search";
+import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
 
 function PlaceholderPage({ title, description }) {
   return (
@@ -36,14 +40,26 @@ function PlaceholderPage({ title, description }) {
 
 function AppRoutes() {
   return (
+    
     <Routes>
       {/* Public Routes */}
+
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute adminOnly>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/" element={<Home />} />
+      <Route path="/search" element={<Search />} />
       <Route path="/watch/:id" element={<Watch />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/auth/google/callback" element={<GoogleAuthCallback />} />
       <Route path="/shorts" element={<Shorts />} />
+      <Route path="/subscriptions" element={<Subscriptions />} />
       <Route path="/help" element={<Help />} />
       <Route path="/channel/:handle" element={<Channel />} />
 
@@ -61,6 +77,7 @@ function AppRoutes() {
       <Route path="/liked-videos" element={<ProtectedRoute><LikedVideos /></ProtectedRoute>} />
       <Route path="/watch-later" element={<ProtectedRoute><WatchLater /></ProtectedRoute>} />
       <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+      <Route path="/you" element={<ProtectedRoute><You /></ProtectedRoute>} />
       <Route path="/feedback" element={<ProtectedRoute><Feedback /></ProtectedRoute>} />
       <Route path="/studio" element={<ProtectedRoute><CreatorDashboard /></ProtectedRoute>} />
       <Route path="/dashboard" element={<ProtectedRoute><CreatorDashboard /></ProtectedRoute>} />
@@ -84,14 +101,16 @@ function AppRoutes() {
         }
       />
       <Route
-  path="/channel/edit"
-  element={
-    <ProtectedRoute>
-      <EditChannel />
-    </ProtectedRoute>
-  }
-/>
+        path="/channel/edit"
+        element={
+          <ProtectedRoute>
+            <EditChannel />
+          </ProtectedRoute>
+        }
+      />
+      
     </Routes>
+    
   );
 }
 

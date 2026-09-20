@@ -6,14 +6,16 @@
 .main-content {
   flex: 1;
   margin-left: 72px;
-  padding: 20px;
+ 
   background: var(--app-background);
   min-height: calc(100vh - 70px);
   overflow-y: auto;
+  min-width: 0;
 }
 
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;
+    padding-bottom: calc(20px + var(--mobile-bottom-nav-height));
   }
 }

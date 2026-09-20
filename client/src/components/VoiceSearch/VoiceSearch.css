@@ -1,0 +1,48 @@
+.voice-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.voice-search-btn {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  padding: 0;
+  color: var(--app-text);
+  font-size: 18px;
+  background: var(--app-chip);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.voice-search-btn:hover { background: var(--app-chip-hover); transform: translateY(-1px); }
+.voice-search-btn.listening { color: #ff5b6f; background: rgba(255, 91, 111, 0.16); animation: voice-pulse 1.2s infinite; }
+.voice-search-btn:focus-visible { outline: 3px solid rgba(255, 91, 111, 0.7); outline-offset: 2px; }
+
+.voice-status,
+.voice-error {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  z-index: 1001;
+  width: max-content;
+  max-width: min(240px, calc(100vw - 24px));
+  padding: 9px 12px;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.35;
+  background: #29292e;
+  border-radius: 8px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+}
+
+.voice-error { background: #c93838; }
+
+@keyframes voice-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+@media (max-width: 768px) { .voice-search { display: none; } }
+@media (prefers-reduced-motion: reduce) { .voice-search-btn.listening { animation: none; } }

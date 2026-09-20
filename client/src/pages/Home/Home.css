@@ -8,6 +8,22 @@
     padding:20px;
 }
 
+.home-feed-section{
+    margin-top:28px;
+}
+
+.home-section-heading{
+    display:flex;
+    align-items:center;
+    margin:0 0 16px;
+}
+
+.home-section-heading h1{
+    margin:0;
+    color:var(--app-text);
+    font-size:22px;
+}
+
 /* =========================
    CATEGORY BAR
 ========================= */
@@ -58,6 +74,48 @@
     gap:26px;
 }
 
+.home-video-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:24px 16px;
+}
+
+.home-skeleton-grid{
+    pointer-events:none;
+}
+
+.home-video-skeleton{
+    min-width:0;
+}
+
+.home-skeleton-thumbnail,
+.home-skeleton-line{
+    background:linear-gradient(100deg, rgba(255,255,255,.06) 30%, rgba(255,255,255,.13) 50%, rgba(255,255,255,.06) 70%);
+    background-size:200% 100%;
+    animation:home-skeleton 1.2s infinite;
+}
+
+.home-skeleton-thumbnail{
+    aspect-ratio:16 / 9;
+    border-radius:12px;
+}
+
+.home-skeleton-line{
+    width:62%;
+    height:12px;
+    margin-top:12px;
+    border-radius:6px;
+}
+
+.home-skeleton-line--wide{
+    width:88%;
+    margin-top:14px;
+}
+
+@keyframes home-skeleton{
+    to{background-position:-200% 0}
+}
+
 /* =========================
    LOADING
 ========================= */
@@ -80,6 +138,22 @@
     text-align:center;
     font-size:16px;
     padding:50px 20px;
+}
+
+.home-error p{
+    margin:0 0 16px;
+}
+
+.home-error button{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:0;
+    border-radius:999px;
+    padding:10px 16px;
+    background:var(--app-chip-active, #fff);
+    color:var(--app-chip-active-text, #111);
+    cursor:pointer;
 }
 
 /* =========================
@@ -106,6 +180,15 @@
 .home-page .video-grid{
     grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
     gap:20px;
+}
+
+.home-section-heading h1{
+    font-size:20px;
+}
+
+.home-video-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:20px 10px;
 }
 
 }

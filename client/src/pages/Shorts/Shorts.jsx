@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   FaArrowDown,
   FaArrowUp,
@@ -508,7 +508,7 @@ function ShortPlayer({
             >
               {subscriptionPending ? "Saving..." : isSubscribed ? "Subscribed" : "Subscribe"}
             </button>
-            <span className="short-subscriber-count">{formatViews(subscriberCount)} subscribers</span>
+            {/* <span className="short-subscriber-count">{formatViews(subscriberCount)} subscribers</span> */}
           </div>
         </div>
 
@@ -644,6 +644,7 @@ function ShortPlayer({
 }
 
 function Shorts() {
+  const [searchParams] = useSearchParams();
   const [shorts, setShorts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -738,6 +739,14 @@ function Shorts() {
       target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
     }
   }, [shorts.length]);
+
+  useEffect(() => {
+    const requestedShortId = searchParams.get("video");
+    if (!requestedShortId || !shorts.length) return;
+
+    const requestedIndex = shorts.findIndex((short) => String(short._id) === requestedShortId);
+    if (requestedIndex >= 0) goToShort(requestedIndex);
+  }, [goToShort, searchParams, shorts]);
 
   const goNext = useCallback(() => goToShort(activeIndex + 1), [activeIndex, goToShort]);
   const goPrevious = useCallback(() => goToShort(activeIndex - 1), [activeIndex, goToShort]);

@@ -111,6 +111,7 @@ app.use(cors({
   origin: [
     "http://localhost:5173",     // Dev
     "http://localhost:3000",     // Dev alt
+    "http://localhost",          // Capacitor Android WebView
     "https://bharattube.in",    // Production
     "https://www.bharattube.in",
     "https://bharattube.vercel.app", // Vercel

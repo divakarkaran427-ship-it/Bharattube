@@ -1,9 +1,26 @@
-import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { App as CapacitorApp } from "@capacitor/app";
+import { Capacitor } from "@capacitor/core";
+import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return undefined;
+
+    const backButtonListener = CapacitorApp.addListener("backButton", ({ canGoBack }) => {
+      if (canGoBack) navigate(-1);
+      else CapacitorApp.exitApp();
+    });
+
+    return () => {
+      backButtonListener.then((listener) => listener.remove());
+    };
+  }, [navigate]);
 
   const hideLayout =
     location.pathname === "/login" ||

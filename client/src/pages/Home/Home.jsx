@@ -4,12 +4,13 @@ import VideoGrid from "../../components/VideoGrid/VideoGrid";
 import { useAuth } from "../../context/AuthContext";
 import recommendationService from "../../services/recommendation.service";
 import videoService from "../../services/video.service";
+import ShortsShelf from "../../components/ShortsShelf/ShortsShelf";
+import { FaRedo } from "react-icons/fa";
 import "./Home.css";
 
 const CATEGORIES = [
   "All", "Music", "Gaming", "News", "Sports",
-  "Education", "Comedy", "Technology", "Food",
-  "Travel", "Fitness", "Fashion", "Movies", "Live",
+  "Education", "Comedy", "Technology", "Entertainment", "Other",
 ];
 
 function Home() {
@@ -19,6 +20,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [retryKey, setRetryKey] = useState(0);
 
   const search = searchParams.get("search") || "";
   const shouldUsePersonalizedFeed = Boolean(user) && !search && activeCategory === "All";
@@ -60,7 +62,9 @@ function Home() {
     };
 
     fetchVideos();
-  }, [search, activeCategory, shouldUsePersonalizedFeed]);
+  }, [search, activeCategory, shouldUsePersonalizedFeed, retryKey]);
+
+  const longVideos = videos.filter((video) => video.isShort !== true);
 
   return (
     <div className="home-page">
@@ -79,17 +83,36 @@ function Home() {
       </div>
 
       {/* Content */}
+      <ShortsShelf />
       {loading ? (
-        <div className="home-loading">Loading videos...</div>
+        <div className="home-video-grid home-skeleton-grid" aria-label="Loading videos" aria-busy="true">
+          {Array.from({ length: 6 }, (_, index) => (
+            <div className="home-video-skeleton" key={index}>
+              <div className="home-skeleton-thumbnail" />
+              <div className="home-skeleton-line home-skeleton-line--wide" />
+              <div className="home-skeleton-line" />
+            </div>
+          ))}
+        </div>
       ) : error ? (
-        <div className="home-error">{error}</div>
-      ) : videos.length === 0 ? (
+        <div className="home-error" role="alert">
+          <p>{error}</p>
+          <button type="button" onClick={() => setRetryKey((key) => key + 1)}>
+            <FaRedo aria-hidden="true" /> Retry
+          </button>
+        </div>
+      ) : longVideos.length === 0 ? (
         <div className="home-empty">
           <h2>No videos found</h2>
           {search && <p>Search results for "{search}"</p>}
         </div>
       ) : (
-        <VideoGrid videos={videos} />
+        <section className="home-feed-section" aria-labelledby="recommended-title">
+          <div className="home-section-heading">
+            <h1 id="recommended-title">Recommended</h1>
+          </div>
+          <VideoGrid videos={longVideos} />
+        </section>
       )}
 
     </div>

@@ -12,7 +12,6 @@ import {
   FaHistory,
   FaLanguage,
   FaList,
-  FaMicrophone,
   FaPalette,
   FaPlus,
   FaQuestionCircle,
@@ -26,6 +25,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useNotifications } from "../../context/NotificationContext";
 import { useSidebar } from "../../context/SidebarContext";
 import searchHistoryService from "../../services/searchHistory.service";
+import VoiceSearch from "../VoiceSearch/VoiceSearch";
 import "./Navbar.css";
 
 function Navbar() {
@@ -74,6 +74,11 @@ function Navbar() {
   const handleSearch = () => {
     const keyword = search.trim();
 
+    if (window.matchMedia("(max-width: 576px)").matches && !keyword) {
+      navigate("/search");
+      return;
+    }
+
     if (!keyword) {
       navigate("/");
       return;
@@ -83,11 +88,21 @@ function Navbar() {
       searchHistoryService.recordSearch(keyword).catch(() => {});
     }
 
-    navigate(`/?search=${encodeURIComponent(keyword)}`);
+    navigate(`/search?q=${encodeURIComponent(keyword)}`);
   };
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") handleSearch();
+  };
+
+  const handleVoiceSearch = (text) => {
+    setSearch(text);
+
+    if (user) {
+      searchHistoryService.recordSearch(text).catch(() => {});
+    }
+
+    navigate(`/search?q=${encodeURIComponent(text)}`);
   };
 
   const handleLogout = async () => {
@@ -254,7 +269,7 @@ function Navbar() {
           <input type="text" placeholder="Search videos..." value={search} onChange={(event) => setSearch(event.target.value)} onKeyDown={handleKeyDown} />
           <button type="button" onClick={handleSearch} aria-label="Search videos"><FaSearch /></button>
         </div>
-        <button type="button" className="mic-btn" aria-label="Search with voice"><FaMicrophone /></button>
+        <VoiceSearch onSearch={handleVoiceSearch} />
       </div>
 
       <div className="navbar-right">

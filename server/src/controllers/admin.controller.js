@@ -1,9 +1,76 @@
 const Monetization = require("../models/monetization.model");
 const Wallet = require("../models/wallet.model");
+const User = require("../models/user.model");
+const Video = require("../models/video.model");
 
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
+
+const getAdminDashboard = asyncHandler(async (req, res) => {
+    const [totalUsers, totalVideos, totalShorts, viewTotals, recentUsers, recentVideos] =
+        await Promise.all([
+            User.countDocuments(),
+            Video.countDocuments({ isShort: { $ne: true } }),
+            Video.countDocuments({ isShort: true }),
+            Video.aggregate([
+                {
+                    $group: {
+                        _id: null,
+                        total: { $sum: "$views" },
+                    },
+                },
+            ]),
+            User.find()
+                .select("name username createdAt")
+                .sort({ createdAt: -1 })
+                .limit(5)
+                .lean(),
+            Video.find()
+                .select("title isShort createdAt")
+                .populate("channel", "channelName")
+                .sort({ createdAt: -1 })
+                .limit(5)
+                .lean(),
+        ]);
+
+    const recentActivity = [
+        ...recentUsers.map((user) => ({
+            id: user._id,
+            type: "user",
+            title: user.name || user.username,
+            detail: "New user joined",
+            createdAt: user.createdAt,
+        })),
+        ...recentVideos.map((video) => ({
+            id: video._id,
+            type: video.isShort ? "short" : "video",
+            title: video.title,
+            detail: video.isShort ? "Short uploaded" : "Video uploaded",
+            channelName: video.channel?.channelName || "Unknown channel",
+            createdAt: video.createdAt,
+        })),
+    ]
+        .sort((first, second) => new Date(second.createdAt) - new Date(first.createdAt))
+        .slice(0, 8);
+
+    return res.status(200).json({
+        success: true,
+        data: {
+            stats: {
+                totalUsers,
+                totalVideos,
+                totalShorts,
+                totalViews: viewTotals[0]?.total || 0,
+            },
+            recentActivity,
+            reports: {
+                available: false,
+                message: "Reports system not connected yet",
+            },
+        },
+    });
+});
 
 // ==============================
 // Get Pending Monetization Requests
@@ -113,6 +180,7 @@ const rejectMonetization = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
+    getAdminDashboard,
     getPendingMonetizations,
     approveMonetization,
     rejectMonetization,

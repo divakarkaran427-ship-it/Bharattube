@@ -97,6 +97,9 @@ button:focus-visible,
   .search-box button { width: 52px; }
   .logo { font-size: 24px; }
   .navbar-right { gap: 11px; }
+  .menu-btn { display: none; }
+  .upload-btn,
+  .profile-menu { display: none; }
   .upload-btn { width: 38px; padding: 0; justify-content: center; border-radius: 50%; }
   .upload-btn span { display: none; }
   .profile-chevron { display: none; }
