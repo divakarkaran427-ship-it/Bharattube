@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const authMiddleware = require("../middlewares/auth.middleware");
-const optionalAuth = require("../middlewares/Optionalauth.middleware");
+const optionalAuth = require("../middlewares/optionalAuth.middleware");
 
 const {
   getHomeFeed,
