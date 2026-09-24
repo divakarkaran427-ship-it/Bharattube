@@ -117,7 +117,7 @@ app.use(cors({
     "http://localhost",          // Capacitor Android WebView
     "https://bharattube.in",    // Production
     "https://www.bharattube.in",
-      "https://bharattube-wubg.vercel.app", // Vercel
+      "https://bharattube-v.vercel.app", // Vercel
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
