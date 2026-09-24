@@ -28,6 +28,16 @@ const logGoogleOAuthError = (stage, error) => {
   console.error(redactGoogleErrorText(error?.stack));
 };
 
+const logGoogleOAuthStateDiagnostics = (req, state, storedState) => {
+  console.error("[Google OAuth] state validation failed", {
+    codePresent: Boolean(req.query.code),
+    statePresent: Boolean(state),
+    storedStatePresent: Boolean(storedState),
+    stateLength: state?.length || 0,
+    storedStateLength: storedState?.length || 0,
+  });
+};
+
 const getGoogleConfig = () => {
   const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL, CLIENT_URL } = process.env;
 
@@ -172,11 +182,14 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 const startGoogleLogin = asyncHandler(async (req, res) => {
   const state = crypto.randomBytes(32).toString("hex");
   const googleClient = getGoogleClient();
+  const isProductionRequest = process.env.NODE_ENV === "production"
+    || req.secure
+    || req.get("x-forwarded-proto") === "https";
 
   res.cookie(GOOGLE_STATE_COOKIE, state, {
     httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    sameSite: isProductionRequest ? "none" : "lax",
+    secure: isProductionRequest,
     maxAge: 10 * 60 * 1000,
     path: "/api/v1/auth/google",
   });
@@ -207,6 +220,7 @@ const completeGoogleLogin = asyncHandler(async (req, res) => {
     res.clearCookie(GOOGLE_STATE_COOKIE, { path: "/api/v1/auth/google" });
 
     if (!code || !state || !storedState || state.length !== storedState.length || !crypto.timingSafeEqual(Buffer.from(state), Buffer.from(storedState))) {
+      logGoogleOAuthStateDiagnostics(req, state, storedState);
       logGoogleOAuthError("state validation", new Error("OAuth state or authorization code is missing or does not match"));
       return redirectToGoogleCallback(res, CLIENT_URL, { error: "google_login_failed" });
     }

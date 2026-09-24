@@ -4,7 +4,8 @@ import "../../styles/auth.css";
 
 function Signup() {
   const handleGoogleSignup = () => {
-    const apiBaseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+    const apiBaseUrl = import.meta.env.VITE_API_URL
+      || (import.meta.env.PROD ? "https://bharattube-ylmq.onrender.com/api/v1" : "http://localhost:5000/api/v1");
     window.location.assign(`${apiBaseUrl}/auth/google`);
   };
 
