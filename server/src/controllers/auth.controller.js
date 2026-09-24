@@ -8,6 +8,26 @@ const ApiResponse = require("../utils/ApiResponse");
 
 const GOOGLE_STATE_COOKIE = "bharattube_google_oauth_state";
 
+const redactGoogleErrorText = (value) => {
+  let text = String(value || "");
+
+  [
+    process.env.GOOGLE_CLIENT_SECRET,
+    process.env.JWT_SECRET,
+  ].filter(Boolean).forEach((secret) => {
+    text = text.split(secret).join("[REDACTED]");
+  });
+
+  return text
+    .replace(/\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b/g, "[REDACTED_TOKEN]")
+    .replace(/([?&](?:access_token|id_token|refresh_token|code)=)[^&\s]+/gi, "$1[REDACTED]");
+};
+
+const logGoogleOAuthError = (stage, error) => {
+  console.error(`[Google OAuth] ${stage} failed: ${redactGoogleErrorText(error?.message)}`);
+  console.error(redactGoogleErrorText(error?.stack));
+};
+
 const getGoogleConfig = () => {
   const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL, CLIENT_URL } = process.env;
 
@@ -172,63 +192,82 @@ const startGoogleLogin = asyncHandler(async (req, res) => {
 });
 
 const completeGoogleLogin = asyncHandler(async (req, res) => {
-  const { CLIENT_URL, GOOGLE_CLIENT_ID } = getGoogleConfig();
-  const { code, state, error } = req.query;
+  let stage = "configuration";
 
-  if (error) {
-    return redirectToGoogleCallback(res, CLIENT_URL, { error: "google_login_cancelled" });
-  }
+  try {
+    const { CLIENT_URL, GOOGLE_CLIENT_ID } = getGoogleConfig();
+    const { code, state, error } = req.query;
 
-  const storedState = req.cookies[GOOGLE_STATE_COOKIE];
-  res.clearCookie(GOOGLE_STATE_COOKIE, { path: "/api/v1/auth/google" });
-
-  if (!code || !state || !storedState || state.length !== storedState.length || !crypto.timingSafeEqual(Buffer.from(state), Buffer.from(storedState))) {
-    return redirectToGoogleCallback(res, CLIENT_URL, { error: "google_login_failed" });
-  }
-
-  const googleClient = getGoogleClient();
-  const { tokens } = await googleClient.getToken(code);
-
-  if (!tokens.id_token) {
-    return redirectToGoogleCallback(res, CLIENT_URL, { error: "google_login_failed" });
-  }
-
-  const ticket = await googleClient.verifyIdToken({
-    idToken: tokens.id_token,
-    audience: GOOGLE_CLIENT_ID,
-  });
-  const googleUser = ticket.getPayload();
-
-  if (!googleUser?.sub || !googleUser.email || !googleUser.email_verified) {
-    return redirectToGoogleCallback(res, CLIENT_URL, { error: "google_email_not_verified" });
-  }
-
-  let user = await User.findOne({ googleId: googleUser.sub });
-
-  if (!user) {
-    user = await User.findOne({ email: googleUser.email.toLowerCase() });
-
-    if (user?.googleId && user.googleId !== googleUser.sub) {
-      return redirectToGoogleCallback(res, CLIENT_URL, { error: "google_account_conflict" });
+    if (error) {
+      return redirectToGoogleCallback(res, CLIENT_URL, { error: "google_login_cancelled" });
     }
 
-    if (user) {
-      user.googleId = googleUser.sub;
-      if (!user.profilePhoto && googleUser.picture) user.profilePhoto = googleUser.picture;
-      await user.save();
-    } else {
-      user = await User.create({
-        name: googleUser.name || googleUser.email.split("@")[0],
-        username: await createGoogleUsername(googleUser.email),
-        email: googleUser.email.toLowerCase(),
-        googleId: googleUser.sub,
-        profilePhoto: googleUser.picture || "",
-      });
-    }
-  }
+    stage = "state validation";
+    const storedState = req.cookies[GOOGLE_STATE_COOKIE];
+    res.clearCookie(GOOGLE_STATE_COOKIE, { path: "/api/v1/auth/google" });
 
-  const token = user.generateToken();
-  return redirectToGoogleCallback(res, CLIENT_URL, { token });
+    if (!code || !state || !storedState || state.length !== storedState.length || !crypto.timingSafeEqual(Buffer.from(state), Buffer.from(storedState))) {
+      logGoogleOAuthError("state validation", new Error("OAuth state or authorization code is missing or does not match"));
+      return redirectToGoogleCallback(res, CLIENT_URL, { error: "google_login_failed" });
+    }
+
+    stage = "authorization code exchange";
+    const googleClient = getGoogleClient();
+    const { tokens } = await googleClient.getToken(code);
+
+    if (!tokens.id_token) {
+      logGoogleOAuthError("authorization code exchange", new Error("Google did not return an ID token"));
+      return redirectToGoogleCallback(res, CLIENT_URL, { error: "google_login_failed" });
+    }
+
+    stage = "ID token verification";
+    const ticket = await googleClient.verifyIdToken({
+      idToken: tokens.id_token,
+      audience: GOOGLE_CLIENT_ID,
+    });
+    const googleUser = ticket.getPayload();
+
+    if (!googleUser?.sub || !googleUser.email || !googleUser.email_verified) {
+      return redirectToGoogleCallback(res, CLIENT_URL, { error: "google_email_not_verified" });
+    }
+
+    stage = "user lookup and persistence";
+    let user = await User.findOne({ googleId: googleUser.sub });
+
+    if (!user) {
+      user = await User.findOne({ email: googleUser.email.toLowerCase() });
+
+      if (user?.googleId && user.googleId !== googleUser.sub) {
+        return redirectToGoogleCallback(res, CLIENT_URL, { error: "google_account_conflict" });
+      }
+
+      if (user) {
+        user.googleId = googleUser.sub;
+        if (!user.profilePhoto && googleUser.picture) user.profilePhoto = googleUser.picture;
+        await user.save();
+      } else {
+        user = await User.create({
+          name: googleUser.name || googleUser.email.split("@")[0],
+          username: await createGoogleUsername(googleUser.email),
+          email: googleUser.email.toLowerCase(),
+          googleId: googleUser.sub,
+          profilePhoto: googleUser.picture || "",
+        });
+      }
+    }
+
+    stage = "JWT generation";
+    const token = user.generateToken();
+    return redirectToGoogleCallback(res, CLIENT_URL, { token });
+  } catch (error) {
+    logGoogleOAuthError(stage, error);
+
+    if (process.env.CLIENT_URL) {
+      return redirectToGoogleCallback(res, process.env.CLIENT_URL, { error: "google_login_failed" });
+    }
+
+    throw error;
+  }
 });
 
 module.exports = {
