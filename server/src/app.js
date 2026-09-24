@@ -53,6 +53,9 @@ process.on("unhandledRejection", (reason) => {
 
 const app = express();
 
+// ⭐ Render / reverse proxy
+app.set("trust proxy", 1);
+
 // =========================
 // ⭐ Rate Limiters
 // Alag alag routes ke liye
