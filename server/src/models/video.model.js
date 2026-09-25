@@ -188,9 +188,15 @@ videoSchema.index({ category: 1 });
 videoSchema.index({ tags: 1 });
 
 // Full Text Search
-videoSchema.index({
-  title: "text",
-  description: "text",
-});
+videoSchema.index(
+  {
+    title: "text",
+    description: "text",
+  },
+  {
+    default_language: "english",
+    language_override: "searchLanguage",
+  }
+);
 
 module.exports = mongoose.model("Video", videoSchema);
