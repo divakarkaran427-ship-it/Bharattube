@@ -73,7 +73,7 @@ const videoSchema = new mongoose.Schema(
 
     language: {
       type: String,
-      default: "Hindi",
+      default: "english",
     },
 
     tags: [
